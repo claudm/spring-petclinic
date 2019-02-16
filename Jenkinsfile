@@ -8,13 +8,13 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/pgoultiaev/spring-petclinic.git'
+                git url: 'https://github.com/claudm/spring-petclinic.git'
             }
         }
 
         stage('unit test') {
             steps {
-                sh "mvn test"
+                sh "_JAVA_OPTIONS=-Djdk.net.URLClassPath.disableClassPathURLCheck=true mvn test"
             }
         }
 
