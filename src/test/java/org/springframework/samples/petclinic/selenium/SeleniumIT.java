@@ -35,14 +35,14 @@ public class SeleniumIT {
 
     @Test
     public void titleShouldBeCorrect() {
-        driver.get("http://petclinic:8080/petclinic");
+        driver.get("http://petclinic:9966/petclinic");
 
         assertEquals("PetClinic :: a Spring Framework demonstration", driver.getTitle());
     }
 
     @Test
     public void findOwnersShouldListMe() {
-        driver.get("http://petclinic:8080/petclinic");
+        driver.get("http://petclinic:9966/petclinic");
 
         driver.findElement(By.xpath("//*[@title=\"find owners\"]")).click();
         driver.findElement(By.linkText("Add Owner")).click();
