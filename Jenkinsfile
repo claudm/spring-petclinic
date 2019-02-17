@@ -52,6 +52,12 @@ pipeline {
 
         stage('UI test on docker instance') {
             steps {
+               def CONTAINER_NAME="petclinic"
+               def status = sh(returnStdout: true, script: "sudo docker ps -f name=$CONTAINER_NAME\$").trim()
+
+                if (status != 0) {
+                    sh "sudo docker stop $CONTAINER_NAME && sudo docker rm $CONTAINER_NAME"
+                }
                 sh "sudo docker run -d --name petclinic -p 9966:8080 --network demopipeline_prodnetwork pgoultiaev/petclinic:\$(git rev-parse HEAD)"
                 sh "mvn verify -Dgrid.server.url=http://selhub:4444/wd/hub/"
             }
