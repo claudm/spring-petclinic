@@ -39,7 +39,7 @@ pipeline {
                 -DgeneratePom=true \
                 -Dpackaging=war \
                 -DrepositoryId=nexus \
-                -Durl=http://nexus:8081/content/repositories/snapshots \
+                -Durl=http://nexus:8081/nexus/content/repositories/snapshots \
                 -Dfile=target/petclinic.war"
             }
         }
