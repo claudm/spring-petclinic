@@ -1,5 +1,3 @@
-
-
 node 
 {
    def mvnHome = tool 'M3'
@@ -81,7 +79,7 @@ node
                   
 
                 
-                sh "sudo docker run -d --name petclinic -p 9966:8080 --network petclinic-demo-pipeline_prodnetwork pgoultiaev/petclinic:\$(git rev-parse HEAD)"
+                sh "sudo docker run -d --name petclinic -p 9966:8080 --network petclinic-demo-pipeline_prodnetwork claudm/petclinic:\$(git rev-parse HEAD)"
                 sh "${mvnHome}/bin/mvn verify -Dgrid.server.url=http://zalenium:4444/wd/hub/"
                 
                 step_time("PUT",Uuid,"UI test on docker instance",VERSION,"claudemir","stop")
@@ -90,7 +88,7 @@ node
 
             } catch (e) {
                 sh "sudo docker stop  petclinic; sudo docker rm   petclinic"              
-                sh "sudo docker run -d --name petclinic -p 9966:8080 --network petclinic-demo-pipeline_prodnetwork pgoultiaev/petclinic:\$(git rev-parse HEAD)"
+                sh "sudo docker run -d --name petclinic -p 9966:8080 --network devops_prodnetwork claudm/petclinic:\$(git rev-parse HEAD)"
                 sh "${mvnHome}/bin/mvn verify -Dgrid.server.url=http://zalenium:4444/wd/hub/"
                 
                 step_time("PUT",Uuid,"UI test on docker instance",VERSION,"claudemir","stop")
@@ -134,6 +132,5 @@ def step_time(verb,Uuid,componente,versao,responsavel,status) {
                                      Versao   : versao,
                                      Responsavel  : responsavel,
                                      Status : status])
-    sh ("curl -X ${VERB} -H \'Content-Type: application/json\' -H \'Accept: application/json\'  -d  \'${payload}\' ${URL}")
+    sh ("curl -X ${VERB} -H 'Content-Type: application/json' -H 'Accept: application/json'  -d  '${payload}' ${URL}")
 }
-
