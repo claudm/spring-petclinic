@@ -43,14 +43,6 @@ node
        
      try {
          stage('UI test on docker instance') {
-              def CONTAINER_NAME="petclinic"
-              def status = sh(returnStdout: true, script: "sudo docker ps -f name=$CONTAINER_NAME\$ | grep $CONTAINER_NAME").trim()
-        
-              if (status != 0) {
-                   
-                    sh "sudo docker stop $CONTAINER_NAME && sudo docker rm $CONTAINER_NAME"
-             
-              }
               
               sh "sudo docker run -d --name petclinic -p 9966:8080 --network petclinic-demo-pipeline_prodnetwork pgoultiaev/petclinic:\$(git rev-parse HEAD)"
               sh "${mvnHome}/bin/mvn verify -Dgrid.server.url=http://zalenium:4444/wd/hub/"
