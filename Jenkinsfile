@@ -44,7 +44,7 @@ node
      try {
          stage('UI test on docker instance') {
               def CONTAINER_NAME="petclinic"
-              def status = sh(returnStdout: true, script: "sudo docker ps -f name=$CONTAINER_NAME\$").trim()
+              def status = sh(returnStdout: true, script: "sudo docker ps -f name=$CONTAINER_NAME\$ | grep $CONTAINER_NAME").trim()
         
               if (status != 0) {
                    
